@@ -1,0 +1,74 @@
+{% extends "base.html" %} 
+{% block content %}
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
+    
+    .head_text {
+        color: white;
+    }
+    
+    .card {
+        box-shadow: 0 10px 28px #E3E7EB;
+    }
+</style>
+
+<header class="title-blog">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-12 col-md-5 mx-auto">
+                <div class="site-heading">
+                    <h3 class=" site-heading my-4 mt-3 text-white"> Latest Blog </h3>
+                    <p class="text-light"> Enjoy blog !!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <!-- Blog Entries Column -->
+        <div class="col-md-12 mt-3 left">
+            {% for post in post_list %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_at}} </p>
+                    <p class="card-text">{{post.content|slice:":200" }}</p>
+                    <a href="{% url 'details_post' post.slug  %}" class="btn btn-primary">Read More &rarr;</a>
+                </div>
+            </div>
+            {% endfor %}
+    
+            {% if page_obj.has_other_pages %}
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                {% if page_obj.has_previous %}
+                  <li class="page-item"><a  class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                  <li class="disabled page-item"><span class="page-link">&laquo;</span></li>
+                {% endif %}
+                {% for i in page_obj.paginator.page_range %}
+                  {% if page_obj.number == i %}
+                    <li class="active page-item"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                  {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                  <li class="disabled page-item"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+              </ul>
+          </nav>
+            {% endif %}
+
+       
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}My Post Page{% endblock title %}
+
+{% block content %} 
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 card mb-4  mt-3 left  top">
+          <div class="card-body">
+            <h3>My Post <snap class="float-right"><a href="{% url 'post_create' %}" class="btn btn-primary">Create Post</a></snap></h3>
+            <hr>
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">slug</th>
+                  <th scope="col">content</th>
+                  <th scope="col">Action<th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for post in post_list %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{post.title}}</td>
+                  <td>{{post.slug}}</td>
+                  <td>{{post.content|slice:":20" }}</td>
+                  <td> <a href="{% url 'post-update' post.slug %}">Edit</a> | <a href="{% url 'post-delete' post.slug %}">Delete</a></td>
+                </tr>
+                {% endfor %} 
+              </tbody>
+            </table>
+           
+               
+            
+        
+          </div>
+        </div>
+        
+      </div>
+    </div>
+{% endblock content %}

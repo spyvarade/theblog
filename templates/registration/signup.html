@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Page{% endblock title %}
+
+{% block content %} 
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <h2>Sign Page</h2>
+   		 <form method="post">
+        {% csrf_token %}
+         {% for field in form %}
+           <p>
+             {{ field.label_tag }}<br>
+             {{ field }}
+             {% if field.help_text %}
+               <small style="color: grey">{{ field.help_text }}</small>
+             {% endif %}
+             {% for error in field.errors %}
+               <p style="color: red">{{ error }}</p>
+             {% endfor %}
+           </p>
+         {% endfor %}
+         <button type="submit">Sign up</button>
+       
+    </form>
+      </div>
+    </div>
+    
+  </div>
+</div>
+    
+{% endblock content %}
